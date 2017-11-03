@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
+<classDiagram>
+  <diagramElements name="">
+    <association aggregation="NONE" direction="BIDIRECTIONAL" id="89949" name="">
+      <role componentId="89410" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>2147483647</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+      <role componentId="89411" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>2147483647</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+    </association>
+    <entity entityType="CLASS" id="89412" isAbstract="false" name="Jounal" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="id_log" type="int" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="date_heure" type="timestamp" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="id_client" type="int" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="id_compte" type="int" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="type_operation" type="tinyint" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="autorisation" type="tinyint" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="etat_compte_initial" type="float" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="etat_compte_resultat" type="int" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="89411" isAbstract="false" name="Compte" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="id_compte" type="int" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="numero" type="int" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="solde" type="float" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="min_autorise" type="float" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="max_retrait_journalier" type="float" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="blocage" type="boolean" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="proprietaire" type="int" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="89410" isAbstract="false" name="Client" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="id_client" type="int" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="nom" type="varchar" visibility="PUBLIC"/>
+    </entity>
+  </diagramElements>
+  <umlView grid="10" name="view no name">
+    <relationView color="-12566464" relationId="89949">
+      <line>
+        <point>
+          <x>341</x>
+          <y>231</y>
+        </point>
+        <point>
+          <x>451</x>
+          <y>231</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>400</x>
+        <y>235</y>
+        <w>0</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>345</x>
+        <y>235</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>415</x>
+        <y>235</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>345</x>
+        <y>208</y>
+        <w>7</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>436</x>
+        <y>208</y>
+        <w>7</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
+    <componentView color="-2079" componentID="89410" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>190</x>
+        <y>180</y>
+        <w>150</w>
+        <h>85</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="89411" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>450</x>
+        <y>180</y>
+        <w>220</w>
+        <h>160</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="89412" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>190</x>
+        <y>300</y>
+        <w>150</w>
+        <h>175</h>
+      </geometry>
+    </componentView>
+  </umlView>
+</classDiagram>

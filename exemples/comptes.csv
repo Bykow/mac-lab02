@@ -1,0 +1,4 @@
+id_compte,numero,solde,min_autorise,max_retrait_journalier,blocage
+1,1,12000,0,1000,0
+2,2,50000,0,1000,0
+3,3,100000,0,1000,0
