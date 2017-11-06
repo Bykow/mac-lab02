@@ -1,4 +1,4 @@
-nomdaintetatreDROP SCHEMA IF EXISTS transactions;
+DROP SCHEMA IF EXISTS transactions;
 CREATE SCHEMA transactions;
 
 USE transactions;
@@ -25,8 +25,8 @@ CREATE TABLE compte_client(
     proprietaire boolean DEFAULT FALSE,
 	droit_lecture_ecriture int(11) DEFAULT 2,
     PRIMARY KEY (id_client, id_compte),
-    FOREIGN KEY compte_client(id_client) REFERENCES client(id_client),
-    FOREIGN KEY compte_client(id_compte) REFERENCES compte(id_compte)
+    FOREIGN KEY (id_client) REFERENCES client(id_client),
+    FOREIGN KEY (id_compte) REFERENCES compte(id_compte)
 );
 
 CREATE TABLE journal(
