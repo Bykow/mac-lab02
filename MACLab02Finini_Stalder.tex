@@ -88,11 +88,11 @@
 
 \subsection{Modèle Relationnel}
 
-Le modèle relationnel pour la base de \textit{Transactions} est représenté dans la fig \ref{fig:rela}. A noter qu'il est tout a fait normal que la table \textit{journal} ne soit pas reliée au reste de la base de donnée. Car si quelque chose venait à être ajouté/supprimé, la table \textit{journal} ne devrait pas être affectée.
+Le modèle relationnel pour la base de \textit{Transactions} est représenté dans la fig \ref{fig:rela}. A noter qu'il est tout a fait normal que la table \textit{journal} ne soit pas reliée au reste de la base de donnée. Car si quelque chose venait à être ajouté/supprimé, la table \textit{journal} ne devrait pas être affectée. A noté que la table \textit{compte client} est une table d'assosiation entre un client et un compte. Comprenez ici qu'une entrée dans cette table représente la relation entre un client et un compte. C'est pour cette raison que nous avons choisi de représenter le boolean \textit{proprietaire} dans cette table. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
-  \includegraphics[height=200px]{relationnel.png}
+  \includegraphics[height=150px]{relationnel.png}
   \caption{Modèle relationnel de la base de données \textit{Transactions}}
   \label{fig:rela}
 \end{figure}
@@ -103,13 +103,6 @@ Le modèle relationnel pour la base de \textit{Transactions} est représenté da
 
 La plus part des contraintes de fonctionnements devraient être traitées par des triggers. Voilà un détail pour chaque contraite.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[height=200px]{entites.png}
-  \caption{Modèle entités associations de la base de données \textit{Transactions}}
-  \label{fig:entites}
-\end{figure}
-
 \begin{enumerate}
 	\item Procédure stockée pour effectuer un retrait
 	\item Ajout dans la procédure citée ci-dessus, avec lecture de la table \textit{journal}
@@ -118,6 +111,13 @@ La plus part des contraintes de fonctionnements devraient être traitées par de
 	\item Ajout d'un trigger avant la suppression d'un client, vérification dans \textit{compte client}
 	\item Ajout d'un trigger avant une insertion dans \textit{compte client}, vérification si le client n'est pas déjà associé au compte
 \end{enumerate}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[height=200px]{entites.png}
+  \caption{Modèle entités associations de la base de données \textit{Transactions}}
+  \label{fig:entites}
+\end{figure}
 
 %------------------------------------------------
 
