@@ -4,3 +4,6 @@
 *.fdb_latexmk
 *.aux
 *.pdf
+*.iml
+lab2/target
+*.zip

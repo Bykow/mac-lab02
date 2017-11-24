@@ -142,6 +142,116 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+DROP PROCEDURE IF EXISTS transfert1 //
+CREATE PROCEDURE transfert1(cpt1 int(11), cpt2 int(11), montant float)
+BEGIN
+
+  DECLARE etat float;
+  SET @@autocommit = 0;
+
+  SELECT solde into etat FROM compte WHERE numero = cpt1;
+  SET etat = etat - montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt1;
+
+  SELECT solde into etat FROM compte WHERE numero = cpt2;
+  SET etat = etat + montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt2;
+
+  SET @@autocommit = 1;
+
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS transfert2 //
+CREATE PROCEDURE transfert2(cpt1 int(11), cpt2 int(11), montant float)
+BEGIN
+
+  DECLARE etat float;
+  SET @@autocommit = 0;
+
+  START TRANSACTION;
+
+  SELECT solde into etat FROM compte WHERE numero = cpt1;
+  SET etat = etat - montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt1;
+
+  SELECT solde into etat FROM compte WHERE numero = cpt2;
+  SET etat = etat + montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt2;
+
+  COMMIT;
+
+  SET @@autocommit = 1;
+
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS transfert3 //
+CREATE PROCEDURE transfert3(cpt1 int(11), cpt2 int(11), montant float)
+BEGIN
+
+  DECLARE etat float;
+  SET @@autocommit = 0;
+
+  START TRANSACTION;
+
+  SELECT solde into etat FROM compte WHERE numero = cpt1 FOR UPDATE;
+  SET etat = etat - montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt1;
+
+  SELECT solde into etat FROM compte WHERE numero = cpt2 FOR UPDATE;
+  SET etat = etat + montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt2;
+
+  COMMIT;
+
+  SET @@autocommit = 1;
+
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS transfert4 //
+CREATE PROCEDURE transfert4(cpt1 int(11), cpt2 int(11), montant float)
+BEGIN
+
+  DECLARE etat float;
+  SET @@autocommit = 0;
+
+  START TRANSACTION;
+
+  IF (cpt1 < cpt2) THEN
+
+  SELECT solde into etat FROM compte WHERE numero = cpt1 FOR UPDATE;
+  SET etat = etat - montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt1;
+
+  SELECT solde into etat FROM compte WHERE numero = cpt2 FOR UPDATE;
+  SET etat = etat + montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt2;
+
+  ELSE
+
+  SELECT solde into etat FROM compte WHERE numero = cpt2 FOR UPDATE;
+  SET etat = etat + montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt2;
+
+  SELECT solde into etat FROM compte WHERE numero = cpt1 FOR UPDATE;
+  SET etat = etat - montant;
+  UPDATE compte SET solde = etat WHERE numero = cpt1;
+
+  END IF;
+
+  COMMIT;
+
+  SET @@autocommit = 1;
+
+END //
+DELIMITER ;
+
 
 CREATE USER IF NOT EXISTS 'admin1234'@'localhost' IDENTIFIED BY 'nimda';
 GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost';
@@ -154,8 +264,8 @@ INSERT into client(nom) VALUES ('u1');
 INSERT into client(nom) VALUES ('u2');
 INSERT into client(nom) VALUES ('u3');
 
-INSERT into compte(numero, solde) VALUES (1010, 10000);
-INSERT into compte(numero, solde) VALUES (2020, 50000);
+INSERT into compte(numero, solde) VALUES (1010, 150000);
+INSERT into compte(numero, solde) VALUES (2020, 150000);
 INSERT into compte(numero, solde) VALUES (3030, 100000);
 
 INSERT into compte_client(id_client, id_compte, proprietaire, droit_lecture_ecriture) VALUES (1,1,true,2);
@@ -169,3 +279,17 @@ GRANT EXECUTE ON PROCEDURE transactions.lire_compte TO 'u2'@'%';
 GRANT EXECUTE ON PROCEDURE transactions.depot_compte TO 'u2'@'%';
 GRANT EXECUTE ON PROCEDURE transactions.lire_compte TO 'u3'@'%';
 GRANT EXECUTE ON PROCEDURE transactions.depot_compte TO 'u3'@'%';
+
+GRANT EXECUTE ON PROCEDURE transactions.transfert1 TO 'u1'@'%';
+GRANT EXECUTE ON PROCEDURE transactions.transfert1 TO 'u2'@'%';
+
+GRANT EXECUTE ON PROCEDURE transactions.transfert2 TO 'u1'@'%';
+GRANT EXECUTE ON PROCEDURE transactions.transfert2 TO 'u2'@'%';
+
+GRANT EXECUTE ON PROCEDURE transactions.transfert3 TO 'u1'@'%';
+GRANT EXECUTE ON PROCEDURE transactions.transfert3 TO 'u2'@'%';
+
+GRANT EXECUTE ON PROCEDURE transactions.transfert4 TO 'u1'@'%';
+GRANT EXECUTE ON PROCEDURE transactions.transfert4 TO 'u2'@'%';
+
+
