@@ -142,6 +142,7 @@ BEGIN
 END //
 DELIMITER ;
 
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS transfert1 //
 CREATE PROCEDURE transfert1(cpt1 int(11), cpt2 int(11), montant float)
@@ -162,6 +163,7 @@ BEGIN
 
 END //
 DELIMITER ;
+
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS transfert2 //
@@ -188,6 +190,7 @@ BEGIN
 END //
 DELIMITER ;
 
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS transfert3 //
 CREATE PROCEDURE transfert3(cpt1 int(11), cpt2 int(11), montant float)
@@ -212,6 +215,7 @@ BEGIN
 
 END //
 DELIMITER ;
+
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS transfert4 //
@@ -291,5 +295,3 @@ GRANT EXECUTE ON PROCEDURE transactions.transfert3 TO 'u2'@'%';
 
 GRANT EXECUTE ON PROCEDURE transactions.transfert4 TO 'u1'@'%';
 GRANT EXECUTE ON PROCEDURE transactions.transfert4 TO 'u2'@'%';
-
-

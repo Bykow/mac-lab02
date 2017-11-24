@@ -1,3 +1,5 @@
+import com.mysql.jdbc.MysqlErrorNumbers;
+
 import java.sql.*;
 
 /**
@@ -11,8 +13,6 @@ public class TransferRunnable implements Runnable {
     private String transferName;
     private String username;
     private String dbName = "transactions";
-    private double soldeBefore;
-    private double soldeAfter;
 
     public TransferRunnable(int compteFrom, int compteTo, double amount, int iteration, String transferName, String username) throws SQLException {
         this.compteFrom = compteFrom;
@@ -21,39 +21,33 @@ public class TransferRunnable implements Runnable {
         this.iteration = iteration;
         this.transferName = transferName;
         this.username = username;
-
     }
 
     public void run() {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
+        int counter = 0;
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/transactions", username, username)) {
-            conn.setAutoCommit(false);
-            stmt = conn.prepareStatement("call " + dbName + "." + transferName + "(?,?,?);");
+            stmt = conn.prepareStatement("call " + dbName + "." + transferName + "(?,?,?)");
+
+            stmt.setInt(1, compteFrom);
+            stmt.setInt(2, compteTo);
+            stmt.setDouble(3, amount);
 
             while (iteration > 0) {
-
-                stmt.setInt(1, compteFrom);
-                stmt.setInt(2, compteTo);
-                stmt.setDouble(3, amount);
-
-                stmt.executeUpdate();
-
-                conn.commit();
-
+                stmt.execute();
                 iteration--;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            if (e.getSQLState().equals("40001")) {
+                iteration++;
+                counter++;
             }
+            System.out.println("FUCKING");
+
         }
+
+        System.out.println(username + ": " + counter + " interblocages");
     }
 }
 
